@@ -70,7 +70,7 @@ map <C-K> <C-W><C-W><C-Y><C-W><C-W>
 "nmap <silent> gwd <C-W><C-W><C-D><C-W><C-W>
 nmap <silent> gww <C-W><C-W>
 nmap <silent> gwc <C-W>c
-nmap <silent> gwC :bd<CR>
+nmap <silent> gwC :bd!<CR>
 nmap <silent> gwv <C-W>v<C-W><C-W>:e.<CR>
 nmap <silent> gwo <C-W>o
 nmap <silent> gwj <C-W>j
@@ -452,9 +452,12 @@ function! GrepSearch()
   let name = input('Search: ')
   call inputrestore()
   "call setline('.', curline . ' ' . name)
-  execute 'gr --exclude-dir="node_modules" -Ri "' . name . '" ./'
+  execute 'gr -REi "' . name . '" ./'
 endfunction
-nmap <leader>gr :call GrepSearch()<CR>
+nmap gss :call GrepSearch()<CR>
+
+set wildignore=*/node_modules/*,*/.git/*
+set grepprg=grep\ --exclude-dir={node_modules,.git}
 
 
 "------------terminal-------------------
@@ -494,8 +497,8 @@ nmap <silent> gen :term<CR>i
 "tcd to current dir of the term
 "this is for the convenience to open or browser the files under current dir
 "nmap gec ipwd<Bar>pbcopy<CR><ESC>:sleep 100m<CR>:tcd<SPACE><C-R>=getreg("+")<CR><BS><CR>
-nmap gec i<C-u>pwd<CR><ESC>:sleep 100m<CR>k<S-v>y:tcd<SPACE><C-r>"<CR>
-nmap geo i<C-u>pwd<CR><Esc>:sleep 100m<CR>k<S-v>y:sp <C-r>"/
+nmap gec i<C-u>pwd<CR><ESC>:sleep 1000m<CR>k<S-v>y:tcd<SPACE><C-r>"<CR>
+nmap geo i<C-u>pwd<CR><Esc>:sleep 1000m<CR>k<S-v>y:sp <C-r>"/
 
 "copy selected text and paste to the command line
 "usage: use v mode to select some lines/text in the terminal, hit this
@@ -523,3 +526,8 @@ let g:indentLine_concealcursor = 0
 
 " do not wrap the search
 set nowrapscan
+
+
+" ---------------- notes --------------------
+" filter/format by prettier, can be used for formating json
+" :'<,'>!prettier --stdin-filetype a.js
