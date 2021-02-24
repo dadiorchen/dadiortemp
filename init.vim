@@ -242,8 +242,8 @@ endif
 "endfun
 
 " the function to convert html to JSX format
-source ~/work/tools/vim/html2JSX.vim
-source ~/work/tools/vim/reactTemplate.vim
+"source ~/work/tools/vim/html2JSX.vim
+"source ~/work/tools/vim/reactTemplate.vim
 "--------------- spell --------------------
 "open a new window (bottom) to display the spell command result ,usage:
 " ,t  //execute spell on current file 
@@ -531,3 +531,17 @@ set nowrapscan
 " ---------------- notes --------------------
 " filter/format by prettier, can be used for formating json
 " :'<,'>!prettier --stdin-filetype a.js
+
+function! JumpDefinition()
+  let curline = getline('.')
+  let filename = substitute(getline('.'), '\v^.*\((([a-zA-Z-_]+\/)*[a-zA-Z-_\.]+\.js):(\d+):(\d+)\).*', '\1', '')
+  let line = substitute(getline('.'), '\v^.*\((([a-zA-Z-_]+\/)*[a-zA-Z-_\.]+\.js):(\d+):(\d+)\).*', '\3', '')
+  echo line
+  exe 'sp +'. line . ' ' . filename
+"  call inputsave()
+"  let name = input('Search: ')
+"  call inputrestore()
+"  "call setline('.', curline . ' ' . name)
+"  execute 'gr -REi "' . name . '" ./'
+endfunction
+nnoremap <leader>dd :call JumpDefinition()<CR>
