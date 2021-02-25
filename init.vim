@@ -534,10 +534,16 @@ set nowrapscan
 
 function! JumpDefinition()
   let curline = getline('.')
-  let filename = substitute(getline('.'), '\v^.*\((([a-zA-Z-_]+\/)*[a-zA-Z-_\.]+\.js):(\d+):(\d+)\).*', '\1', '')
-  let line = substitute(getline('.'), '\v^.*\((([a-zA-Z-_]+\/)*[a-zA-Z-_\.]+\.js):(\d+):(\d+)\).*', '\3', '')
+"  let filename = substitute(getline('.'), '\v^.*\(([a-zA-Z-_\.\/]+\.js):(\d+):(\d+)\).*$', '\1', '')
+"  let line = substitute(getline('.'), '\v^.*\(([a-zA-Z-_\.\/]+\.js):(\d+):(\d+)\).*$', '\2', '')
+  let filename = substitute(getline('.'), '\v^.{-}([a-zA-Z-_.\/]*\.js)[|:]=(\d+)=.*$', '\1', '')
+  let line = substitute(getline('.'), '\v^.{-}([a-zA-Z-_.\/]*\.js)[|:]=(\d+)=.*$', '\2', '')
   echo line
-  exe 'sp +'. line . ' ' . filename
+  if(line =~ '\v\d+')
+    exe 'sp +'. line . ' ' . filename
+  else
+    exe 'sp ' . filename
+  endif
 "  call inputsave()
 "  let name = input('Search: ')
 "  call inputrestore()
