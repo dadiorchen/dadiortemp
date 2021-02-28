@@ -551,3 +551,5 @@ function! JumpDefinition()
 "  execute 'gr -REi "' . name . '" ./'
 endfunction
 nnoremap <leader>dd :call JumpDefinition()<CR>
+
+nnoremap gdf :echo system('node ~/dadiortemp/openfile/nn.js cd')<CR>
