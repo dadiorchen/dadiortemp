@@ -457,7 +457,7 @@ endfunction
 nmap gss :call GrepSearch()<CR>
 
 set wildignore=*/node_modules/*,*/.git/*
-set grepprg=grep\ --exclude-dir={node_modules,.git}
+set grepprg=grep\ -n\ --exclude-dir={node_modules,.git}
 
 
 "------------terminal-------------------
