@@ -7,6 +7,6 @@ var attach = require('neovim').attach; // npm install neovim-client
   console.log("dir:", fs.openSync("."));
   console.log("dir:", path.basename(__dirname));
   console.log("cmd:", process.cwd());
-  await nvim.command(`sp ${process.cwd()}/${process.argv.slice(-1).join('')}`);
+  await nvim.command(`tcd ${process.cwd()}`);
   process.exit();
 })();
