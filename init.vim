@@ -78,7 +78,9 @@ nmap <silent> gwJ <C-W>J
 nmap <silent> gwk <C-W>k
 nmap <silent> gwK <C-W>K
 nmap <silent> gwh <C-W>h
+nmap <silent> gwH <C-W>H
 nmap <silent> gwl <C-W>l
+nmap <silent> gwL <C-W>L
 nmap <silent> gw] <C-W>j
 nmap <silent> gw[ <C-W>k
 " new direction
