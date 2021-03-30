@@ -344,33 +344,11 @@ au BufRead * set colorcolumn=80
 "----------------------- plugin vim-plug --------------
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'scrooloose/nerdtree'
-Plug 'dense-analysis/ale'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'git@github.com:Yggdroot/indentLine.git'
 call plug#end()
 
-"------------------------ ale ------------------------
-let g:ale_enabled = 0
-let g:ale_completion_enabled = 0
-let g:ale_set_quickfix = 0
-let g:ale_fix_on_save = 0
-let g:ale_sign_column_always = 1
-let g:ale_completion_tsserver_autoimport = 0
-set omnifunc=ale#completion#OmniFunc
-set completeopt=menu,menuone,preview,noselect,noinsert
-"nnoremap <leader>fn :ALENext -error<cr>
-"nnoremap <leader>fp :ALEPrevious -error<cr>
-map <F3> :ALEGoToDefinition<CR>
-map <F9> :ALEFindReferences<CR>
-map <F2> :ALEHover<CR>
-map <leader>= :ALEFix<CR>
-let g:ale_linters = {
-  \   'javascript': ['eslint', 'prettier', 'fecs',  'tsserver', 'xo'],
-  \}
-let g:ale_fixers = {
-  \   'javascript': ['eslint', 'prettier', 'fecs', 'tsserver', 'xo'],
-  \}
 
 "----------------------- filetype ---------------------
 "for mac crontab  
@@ -409,11 +387,34 @@ map <leader><space> :FZF<CR>
 set wildignorecase
 
 "---------------- coc --------------------
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nmap <leader>ac  <Plug>(coc-codeaction)
+nmap <silent> gcd <Plug>(coc-definition)
+nmap <silent> gcy <Plug>(coc-type-definition)
+nmap <silent> gci <Plug>(coc-implementation)
+nmap <silent> gcr <Plug>(coc-references)
+nmap <silent> gcr <Plug>(coc-references)
+nmap <silent> gca :<C-u>CocList diagnostics<cr>
+nmap <silent> gcl  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nmap <silent> gco :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nmap <silent> gcs  :<C-u>CocList -I symbols<cr>
+nmap <silent> gcS  :<C-u>CocList -I grep<cr>
+nmap <silent> gcb  :<C-u>CocList buffers<cr>
+nmap <silent> gcf  :<C-u>CocList files<cr>
+xmap <silent> gcF  <Plug>(coc-format-selected)
+nmap <silent> gcm  :<C-u>CocList mru<cr>
+" Do default action for next item.
+nmap <silent> gcj  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nmap <silent> gck  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nmap <silent> gcp  :<C-u>CocListResume<CR>
+nmap <silent> gcc  :CocFix<CR>
+"test
+nmap <silent> gct <Plug>(coc-refactor)
+
+
+"nmap <leader>ac  <Plug>(coc-codeaction)
 nmap <leader>ai :call CocActionAsync('runCommand', 'tsserver.organizeImports')<CR>
 nmap <leader>ao :call     CocAction('runCommand', 'editor.action.organizeImport')<CR>
 " Remap for do codeAction of selected region
@@ -437,6 +438,28 @@ else
   set signcolumn=yes
 endif
 nmap <leader>rn <Plug>(coc-rename)
+"trigger the completion
+inoremap <silent><expr> <c-]> coc#refresh()
+
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Mappings for CoCList
+" Show all diagnostics.
+"nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+"nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+"nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+"nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+"nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+"nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+"nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+"nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 "------------------ macro/memory -------------
 nnoremap <leader>cs $a// eslint-disable-line<ESC>
@@ -554,4 +577,5 @@ function! JumpDefinition()
 endfunction
 nnoremap <leader>dd :call JumpDefinition()<CR>
 
-nnoremap gdf :echo system('node ~/dadiortemp/openfile/nn.js cd')<CR>
+"nnoremap gdf :echo system('node ~/dadiortemp/openfile/nn.js cd')<CR>
+
