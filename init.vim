@@ -577,5 +577,5 @@ function! JumpDefinition()
 endfunction
 nnoremap <leader>dd :call JumpDefinition()<CR>
 
-"nnoremap gdf :echo system('node ~/dadiortemp/openfile/nn.js cd')<CR>
-
+vnoremap <silent> gry :w! scp://root@47.91.14.192//root/share/paste.txt <CR>
+noremap <silent> grp :r scp://root@47.91.14.192//root/share/paste.txt <CR>
